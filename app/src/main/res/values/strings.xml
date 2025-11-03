@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">todoListSample</string>
+    <string name="bt_add_item">追加する</string>
 </resources>
