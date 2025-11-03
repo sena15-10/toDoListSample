@@ -1,7 +1,11 @@
 package com.example.todolistsample
 
 import TodoAdapter
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -34,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         //todoRecyclerView.layoutManager =GridLayoutManager(this,2)
         //---------------------------------------------------------//
 
+        //ステップ２アイテムの追加
+        val btAdd = findViewById<Button>(R.id.btAddItem)
+        btAdd.setOnClickListener(ButtonAddItemClickListener())
+
 
     }
 
@@ -43,5 +51,12 @@ class MainActivity : AppCompatActivity() {
         todoList.add(TodoItem(2, "DB設計の見直し", false, 2)) // 優先度：中
         todoList.add(TodoItem(3, "牛乳を買う", true, 3)) // 優先度：低 (チェック済み)
         todoList.add(TodoItem(4, "プレゼン資料の準備", false, 2)) // 優先度：中
+    }
+
+    private inner class ButtonAddItemClickListener : OnClickListener {
+        override fun onClick(v: View?) {
+            val intent = Intent(this@MainActivity , AddToActivity::class.java )
+            startActivity(intent)
+        }
     }
 }

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">todoListSample</string>
     <string name="bt_add_item">追加する</string>
+    <string name="hint_add_item">タスク名を入力してください</string>
+    <string name="lb_pr">優先度</string>
+    <string-array name="priority_list">
+        <item>低</item>
+        <item>中</item>
+        <item>高</item>
+    </string-array>
+    <string name="bt_save">保存する</string>
 </resources>
