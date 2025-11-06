@@ -41,7 +41,7 @@ class TodoAdapter(val todoList: MutableList<TodoItem>):
         holder.checkBox.isChecked = currentTodo.isCompleted
         holder.priorityIndicator.setImageResource(R.drawable.ic_priority)
         val context = holder.itemView.context
-        val iconColor = when ( currentTodo.isPriority) {
+        val iconColor = when ( currentTodo.priority) {
             1 -> ContextCompat.getColor(context, R.color.priority_high_color)
             2 -> ContextCompat.getColor(context, R.color.priority_medium_color)
             else -> ContextCompat.getColor(context, R.color.priority_low_color)
