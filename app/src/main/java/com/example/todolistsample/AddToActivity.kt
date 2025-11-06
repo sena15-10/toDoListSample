@@ -33,6 +33,7 @@ class AddToActivity : AppCompatActivity() {
         //todoアイテムを作成する
 
         btnSave = findViewById(R.id.btnSave)
+        btnSave.setOnClickListener(SaveBtnClickListener())
 
     }
     private inner class SaveBtnClickListener : OnClickListener{

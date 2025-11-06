@@ -1,12 +1,15 @@
 package com.example.todolistsample
 
 import TodoAdapter
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,6 +21,42 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todoRecyclerView: RecyclerView
     private lateinit var todoAdapter: TodoAdapter
     private val todoList = mutableListOf<TodoItem>()
+    //ランチャーはフィールドなのでonCreateより上に記述
+    // ★ ステップ1: 新しい画面から「結果を受け取る」ためのランチャーを準備
+    private val addTodoLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result -> // <-- AddTodoActivity が閉じたら、ここが実行される！
+
+        // 1. 結果が「成功(OK)」かどうかをチェック
+        if (result.resultCode == Activity.RESULT_OK) {
+
+            // 2. 返されたIntent(result.data)からデータを取り出す
+            //    (AddTodoActivityで "NEW_TASK_NAME" として詰めたもの)
+            // もしIdをint型ではなくLong型であるなら以下の一行は使わない
+            val newId = todoList.size + 1
+            val taskName = result.data?.getStringExtra("NEW_TASK_NAME")
+            val priority = result.data?.getIntExtra("NEW_PRIORITY", 3)
+
+            // 3. データが正しく取れたかチェック
+            if (!taskName.isNullOrBlank() && priority != null) {
+
+                // 4. ★★★ ここが「リストに要素を追加する」処理 ★★★
+                val newItem = TodoItem(
+                    id = newId,
+                    taskName = taskName,
+                    isCompleted = false,
+                    priority = priority
+                )
+
+                // 5. リストに追加し、アダプターに通知
+                todoList.add(newItem)
+                todoAdapter.notifyItemInserted(todoList.size - 1)
+                todoRecyclerView.scrollToPosition(todoList.size - 1)
+            }
+        }
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +95,9 @@ class MainActivity : AppCompatActivity() {
     private inner class ButtonAddItemClickListener : OnClickListener {
         override fun onClick(v: View?) {
             val intent = Intent(this@MainActivity , AddToActivity::class.java )
-            startActivity(intent)
+            addTodoLauncher.launch(intent)
         }
     }
+
+
 }
