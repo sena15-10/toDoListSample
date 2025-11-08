@@ -1,13 +1,15 @@
 // TodoAdapter.kt
+
 import android.content.res.ColorStateList
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolistsample.R
 import com.example.todolistsample.TodoItem
@@ -33,6 +35,8 @@ class TodoAdapter(val todoList: MutableList<TodoItem>):
         return todoList.size
     }
 
+
+
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         // Get the data model for this position
         val currentTodo = todoList[position]
@@ -47,9 +51,40 @@ class TodoAdapter(val todoList: MutableList<TodoItem>):
             else -> ContextCompat.getColor(context, R.color.priority_low_color)
         }
         holder.priorityIndicator.imageTintList = ColorStateList.valueOf(iconColor)
-
-
+        //STEP.6コンテキストメニューの表示
+        holder.itemView.setOnLongClickListener{ view ->
+            showPopupMenu(view , holder.adapterPosition)
+            true
+        }
     }
+
+    private fun showPopupMenu(view: View , position: Int) {
+        val popup = PopupMenu(view.context, view)
+        //メニューのリソースを読み込みviewオブジェクトに変換
+        popup.inflate(R.menu.todo_item_operation_menu)
+        //メニューの表示
+        //メニュー項目がクリックされたときのリスナー設定
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_delete -> {
+                    //削除処理
+                    //データリストからアイテムを削除
+                    todoList.removeAt(position)
+                    //2. Adapterにアイテムが削除されたことを通知し、画面を更新
+                    notifyItemRemoved(position)
+                    true
+                }
+                R.id.menu_edit -> {
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.gravity = Gravity.END
+        popup.show()
+    }
+
+
 
 
 }

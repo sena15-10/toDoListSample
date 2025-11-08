@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter: TodoAdapter
     private val todoList = mutableListOf<TodoItem>()
     //ランチャーはフィールドなのでonCreateより上に記述
-    // ★ ステップ1: 新しい画面から「結果を受け取る」ためのランチャーを準備
+    // ★ ステップ4: 新しい画面から「結果を受け取る」ためのランチャーを準備
     private val addTodoLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result -> // <-- AddTodoActivity が閉じたら、ここが実行される！
@@ -50,7 +50,17 @@ class MainActivity : AppCompatActivity() {
 
                 // 5. リストに追加し、アダプターに通知
                 todoList.add(newItem)
+
+                // 2. アダプターに「アイテムが追加されたこと」を通知する
+                // RecyclerViewのアダプター（todoAdapter）に対して、「リストの特定の位置に新しいデータが入ったよ」と伝えます。
+                // `todoList.size - 1` は、リストの末尾に追加されたアイテムのインデックス（位置番号）を指します。
+                // この命令を受け取ったアダプターは、RecyclerViewに対して「この位置に新しいビューを作って表示して！」と指示します。
+                //       これにより、画面に新しいアイテムがアニメーション付きで表示されます。
                 todoAdapter.notifyItemInserted(todoList.size - 1)
+                //アイテムが見える位置までリストを自動スクロールさせる
+                // 新しいアイテムがリストの末尾に追加された場合、そのアイテムが画面の外で見えないことがあります。
+                // この命令は、RecyclerViewに対して「リストの末尾（`todoList.size - 1` の位置）まで自動でスクロールして」と指示します。
+                // これにより、ユーザーは追加したアイテムをすぐに見ることができます。
                 todoRecyclerView.scrollToPosition(todoList.size - 1)
             }
         }
