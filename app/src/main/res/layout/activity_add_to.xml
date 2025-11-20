@@ -8,35 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".AddToActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilTaskName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTaskName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_add_item"
-            android:inputType="text" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tvPriorityLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/lb_pr"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tilTaskName"
-        app:layout_constraintStart_toStartOf="@id/tilTaskName" />
-
     <Button
         android:id="@+id/btnSave"
         android:layout_width="0dp"
@@ -49,18 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Spinner
-        android:id="@+id/PriorityList"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/TaskInputFragment"
+        android:name="com.example.todolistsample.TaskInputFragment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#B6AEAE"
-        android:entries="@array/priority_list"
-        android:minHeight="48dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPriorityLabel" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
