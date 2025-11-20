@@ -11,4 +11,6 @@
     <string name="bt_save">保存する</string>
     <string name="item_delete">削除する</string>
     <string name="item_edit">編集する</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
