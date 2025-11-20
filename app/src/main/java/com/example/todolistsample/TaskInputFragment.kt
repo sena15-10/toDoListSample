@@ -85,12 +85,7 @@ class TaskInputFragment : Fragment() {
 
         // 新しい TodoItem を作って返す
         // 編集モードならそのIDを使い、新規なら 0 を使う
-        val idToUse: Int
-        if (editingTodo != null) {
-            idToUse = editingTodo!!.id
-        } else {
-            idToUse = 0
-        }
+        val idToUse = editingTodo?.id ?: 0
 
         return TodoItem(idToUse, taskName, false, priority)
     }

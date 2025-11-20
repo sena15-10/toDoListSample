@@ -48,7 +48,7 @@ class AddToActivity : AppCompatActivity() {
                 // ※ activity_add_to.xml に配置した FragmentContainerView のIDを指定してください
                 // まだコンテナを作っていない場合は、ConstraintLayoutなど親のID(R.id.mainなど)でも一旦動きますが、
                 // 正しくは <FragmentContainerView android:id="@+id/container" ... /> を作るべきです。
-                .replace(R.id.main, fragment, "INPUT_FRAGMENT")
+                .replace(R.id.TaskInputFragment, fragment, "INPUT_FRAGMENT")
                 .commit()
         }
 
@@ -65,7 +65,7 @@ class AddToActivity : AppCompatActivity() {
             if (todoItem != null) {
                 val intent = Intent()
                 intent.putExtra("NEW_TASK_NAME", todoItem.taskName)
-                intent.putExtra("NEW_TASK_PRIORITY", todoItem.priority)
+                intent.putExtra("NEW_PRIORITY", todoItem.priority)
 
                 setResult(Activity.RESULT_OK, intent)
                 finish()
